@@ -1,0 +1,68 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Ionic 4 JavaScript Template</title>
+    <meta  name="viewport"  content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- Import the Ionic CSS -->
+    <link href="https://unpkg.com/@ionic/core@latest/css/ionic.bundle.css" rel="stylesheet"><!-- Import Ionic -->
+    <script type="module" src="https://unpkg.com/@ionic/core@latest/dist/ionic/ionic.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/@ionic/core@latest/dist/ionic/ionic.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.js"></script>
+
+
+  </head>
+<body>
+    <ion-app>
+      <ion-tabs>
+        <ion-tab label='Home' icon='home'>
+          <ion-nav class="tab-one-nav"></ion-nav>
+        </ion-tab>
+        <ion-tab label='About' icon='map'>
+          <ion-nav class="tab-two-nav"></ion-nav>
+        </ion-tab>
+        <ion-tab label='Contact' icon='contact'>
+          <ion-nav class="tab-three-nav"></ion-nav>
+        </ion-tab>     
+      </ion-tabs>
+    </ion-app>
+
+<style>
+
+</style>
+
+<script>
+  customElements.define('app-tabs', class TabsPage extends HTMLElement {
+
+    async  connectedCallback() {
+      this.innerHTML = `
+        <ion-tab label='Contact' icon='contact'>
+        <ion-header>
+          <ion-toolbar color='primary'>
+          <ion-title>Ionic JavaScript Starter</ion-title>
+        </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          <p>Hello! I'm the third tab!</p>
+        </ion-content>
+        </ion-tab>
+      `;
+
+      const  navOne  =  this.querySelector('.tab-one-nav');
+      await  navOne.componentOnReady();
+      await  navOne.setRoot('app-home');
+      const  navTwo  =  this.querySelector('.tab-two-nav');
+      await  navTwo.componentOnReady();
+      await  navTwo.setRoot('app-about');
+    }
+  }) 
+    async  function  init() {
+      const  nav  =  document.querySelector('ion-nav');
+      await  nav.componentOnReady();
+      nav.root  =  'app-tabs';
+    }
+
+</script>
+</body>
+</html>
