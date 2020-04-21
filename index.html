@@ -1,68 +1,143 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Ionic 4 JavaScript Template</title>
-    <meta  name="viewport"  content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <!-- Import the Ionic CSS -->
-    <link href="https://unpkg.com/@ionic/core@latest/css/ionic.bundle.css" rel="stylesheet"><!-- Import Ionic -->
-    <script type="module" src="https://unpkg.com/@ionic/core@latest/dist/ionic/ionic.esm.js"></script>
-    <script nomodule="" src="https://unpkg.com/@ionic/core@latest/dist/ionic/ionic.js"></script>
-    <script type="module" src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule="" src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Photo Uploading and Cropping Tool</title>
+
+    <!-- Latest compiled and minified Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Popper JS 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    -->
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script> 
+    <style>
+        canvas {
+            width: 80%;
+            height: auto;
+        }
+        
+        #gettingstarted {
+            width: 100%;
+            height: auto;
+        }
+        @media only screen and (min-width: 500px) { 
+            canvas {
+                width: 400px;
+                height: auto;
+            }
+
+            #gettingstarted {
+                width: 500px;
+                height: auto;
+            }
+        }
 
 
-  </head>
+        #myCanvasTop { position: absolute; z-index: 2}
+        #myCanvas    { position: absolute; z-index: 1}
+
+        .fixed-bottom {
+            position: fixed;
+            margin: auto;
+            height: 100px;
+            width: 100%;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1030;
+        }
+    </style>
+</head>
+
 <body>
-    <ion-app>
-      <ion-tabs>
-        <ion-tab label='Home' icon='home'>
-          <ion-nav class="tab-one-nav"></ion-nav>
-        </ion-tab>
-        <ion-tab label='About' icon='map'>
-          <ion-nav class="tab-two-nav"></ion-nav>
-        </ion-tab>
-        <ion-tab label='Contact' icon='contact'>
-          <ion-nav class="tab-three-nav"></ion-nav>
-        </ion-tab>     
-      </ion-tabs>
-    </ion-app>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a href="#home" class="nav-link active" data-toggle="tab">Home</a>
+    </li>
+    <li class="nav-item">
+        <a href="#start" class="nav-link" data-toggle="tab">Getting started</a>
+    </li>
+    <li class="nav-item">
+        <a href="#tool" class="nav-link" data-toggle="tab">Cropping tool</a>
+    </li>
+</ul>
 
-<style>
+<div class="tab-content">
+    <div class="tab-pane fade show active" id="home">
+        <div class="alert alert-danger" role="alert" id="alert2">
+            <p>The guidelines of the digital photo for submission:</p>
+                <ul>
+                    <li>must be in colour, taken against plain white background without shadow</li>
+                    <li>must be taken within the last 3 months</li>
+                    <li>show your full face without headgear [facing forward with eyes open]</li>
+                    <li>show that your hair is neatly combed or tied up and must be of natural colour</li>
+                    <li>hair must not cover the eyebrows or the eyes</li>
+                    <li>not showing any outrageous earrings</li>
+                    <li>spectacle frames must not cover part of your eyes</li>
+                    <li>spectacle lenses must not reflect or glare</li>
+                </ul>
+        </div>
+        <h3>Steps</h3>
+        <img src="https://puahhockleng.github.io/photocrop/ePhoto3.jpg" class="img-fluid" alt="three steps in the process"/>
+    </div>
+    <div class="tab-pane fade" id="start">
+        <div class="alert alert-primary" role="alert" id="alert1">
+            <p>Watch this "Getting Started" video to learn how to use the Cropping Tool.</p>
+            <video controls class="embed-responsive embed-responsive-16by9">
+                <source src="https://puahhockleng.github.io/photocrop/ePhoto.ogg" type='video/ogg; codecs="theora, vorbis"'>
+                <source src="https://puahhockleng.github.io/photocrop/ePhoto.mp4" type='video/mp4; codecs="avc1.4D401E, mp4a.40.2"'>
+                <img id='gettingstarted' src='https://puahhockleng.github.io/photocrop/gettingstarted.gif' alt='demo' >
+            </video>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="tool">
+        <div class="container-fluid">
+            <p id="starthints" class="mb-1 lead">This tool works best on Chrome on Android phones, Safari on iPhones/iPads and Chrome on Desktop computers/Laptops.</p>
+            <p id="hints" class="mb-1 lead">ERROR: Your browser does not support this application.  Please try it with another browser.</p>
+            <div class="input-group my-0">
+                <input id="fileTocrop" type="file" class="form-control"  aria-describedby="basic-addon2">
+            </div>
+        
+            <div class="input-group mb-1" id="fileInput">
+                <input id="fileTosave" type="text" class="form-control" placeholder="NRIC no. Eg T1111111Z" aria-label="NRIC no. Eg T1111111Z" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                  <span id="labelTosave" class="input-group-text" id="basic-addon2">.jpg</span>
+                </div>
+            </div>
+        
+            <div class="row" id="allCanvas">
+                <div id="col2">
+                    <canvas  id="myCanvasTop"></canvas>
+                    <canvas  id="myCanvas"></canvas>
+                </div>
+                <div id="col3">
+                    <canvas  id="myCropcanvas"></canvas>
+                </div>
+                <div id="col4">
+                    <canvas  id="myTempcanvas"></canvas>
+                </div>
+            </div>
+        
+            <div class="fixed-bottom">
+                <button class="btn btn-primary btn-lg" id="btnRotate" disabled>Rotate photo</button>
+                <button class="btn btn-primary btn-lg" id="btnFlip" disabled>Flip selfie</button>
+                <button class="btn btn-primary btn-lg" id="btnClearrect" disabled>Clear rectangle</button>
+                <button class="btn btn-primary btn-lg" id="btnCrop" disabled>Crop photo</button>
+                <button class="btn btn-primary btn-lg" id="btnSave" disabled>Save photo</button>
+                <button class="btn btn-primary btn-lg" id="btnRestart" disabled>Start all over</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-</style>
 
-<script>
-  customElements.define('app-tabs', class TabsPage extends HTMLElement {
-
-    async  connectedCallback() {
-      this.innerHTML = `
-        <ion-tab label='Contact' icon='contact'>
-        <ion-header>
-          <ion-toolbar color='primary'>
-          <ion-title>Ionic JavaScript Starter</ion-title>
-        </ion-toolbar>
-        </ion-header>
-        <ion-content>
-          <p>Hello! I'm the third tab!</p>
-        </ion-content>
-        </ion-tab>
-      `;
-
-      const  navOne  =  this.querySelector('.tab-one-nav');
-      await  navOne.componentOnReady();
-      await  navOne.setRoot('app-home');
-      const  navTwo  =  this.querySelector('.tab-two-nav');
-      await  navTwo.componentOnReady();
-      await  navTwo.setRoot('app-about');
-    }
-  }) 
-    async  function  init() {
-      const  nav  =  document.querySelector('ion-nav');
-      await  nav.componentOnReady();
-      nav.root  =  'app-tabs';
-    }
-
-</script>
-</body>
+<!--Copyright (C) 2018 Puah Hock Leng - All Rights Reserved
+    Puah_Hock_Leng&#64;ite&#46;edu&#46;sg  -->
+    <script>$(document).ready(function(){var t=$("#hints"),e=$("#alert1"),a=$("#alert2"),o=$("#fileTocrop"),i=$("#fileTosave"),r=$("#labelTosave"),s=$("#btnRotate"),n=$("#btnFlip"),l=$("#btnClearrect"),h=$("#btnCrop"),d=$("#btnSave"),c=$("#btnRestart"),p=$("#myCanvas"),g=p[0],m=g.getContext("2d"),u=$("#myCanvasTop"),v=u[0],b=v.getContext("2d");b.globalAlpha=.2;var f,w=$("#myCropcanvas"),y=w[0],C=y.getContext("2d"),k=$("#myTempcanvas")[0],M=k.getContext("2d"),R=$("#col2"),x=$("#col3"),I=$("#col4"),A=!1,T=!1,D=!1,L=5,P=!1,j=/ipad|iphone|ipod/i.test(navigator.userAgent.toLowerCase()),S=/msie|trident|edge/i.test(navigator.userAgent.toLowerCase()),U=/crios/i.test(navigator.userAgent.toLowerCase()),O=/webkit/i.test(navigator.userAgent.toLowerCase()),Y=["Rotate/Flip photo if necessary.  Tap, hold and drag on image to draw a rectangle crop area . . .","Tap, hold and drag on the photo to draw a rectangle area to crop it to size . . . . . . . . . . .","Click on ‘Clear rectangle’ to start again.  Click ‘Crop photo’ if you are satisfied with it . . .","Type in the filename to save as and click ‘Save photo’. Otherwise, click 'Start all over'.","Select a photo from your device to crop.","Only Safari browser is supported on iPhones/iPads.  Your browser is not supported!","Only Chrome browser is supported on Desktop computers/Laptops.  Your browser is not supported!"];j&&O&&U?t.html("<div class='alert alert-danger' role='alert'>"+Y[5]+"</div>"):S?t.html("<div class='alert alert-danger' role='alert'>"+Y[6]+"</div>"):t.text(Y[4]);var E,F;E=g.getBoundingClientRect(),F=window.devicePixelRatio,g.width=Math.round(F*E.right)-Math.round(F*E.left),g.height=Math.round(F*E.bottom)-Math.round(F*E.top),m.scale(F,F),i.hide(),r.hide(),p.hide(),s.hide(),n.hide(),l.hide(),h.hide(),d.hide(),c.hide();var z,B,W=new Image;o.on("change",function(i){t.text(Y[0]),e.hide(),a.hide();var r=new FileReader;r.onload=function(t){W.onload=function(){z=W.width,B=W.height,z>B?z>480&&(B*=480/z,z=480):B>360&&(z*=360/B,B=360),v.width=g.width=z,v.height=g.height=B,m.drawImage(W,0,0,z,B),L=Math.round(5/480*z)},W.src=t.target.result},r.readAsDataURL(i.target.files[0]),p.fadeIn(),R.addClass("col-12"),s.removeAttr("disabled").fadeIn(),n.removeAttr("disabled").fadeIn(),o.hide(),A=!0,D=!0});var X=1,G=!1;s.on("click",function(e){t.text(Y[0]),G=!0,V(),X++,G=!1,A=!0});var J=1,N=!1;n.on("click",function(e){t.text(Y[0]),N=!0,V(),J++,N=!1,A=!0});var V=function(){m.clearRect(0,0,g.width,g.height);var t=G?X:X-1;t%2==0?(v.width=g.width=z,v.height=g.height=B):(v.width=g.width=B,v.height=g.height=z),m.save(),t%2==0?m.translate(z/2,B/2):m.translate(B/2,z/2),m.rotate(90*t*Math.PI/180),m.translate(-z/2,-B/2),(N?J:J-1)%2==0||(t%2==0?(m.translate(z,0),m.scale(-1,1)):(m.translate(0,B),m.scale(1,-1))),m.drawImage(W,0,0,z,B),m.restore()},Z="";$(window).on("scroll",function(e){Z=t.html(),!P&&D&&l.trigger("click"),t.html(Z)}),$(window).on("resize",function(e){Z=t.html(),!P&&D&&l.trigger("click"),t.html(Z)}),l.on("click",function(e){t.text(Y[1]),T=!1,dt(),b.clearRect(0,0,g.width,g.height),A=!0,h.hide()}),h.on("click",function(){if(T){if(t.text(Y[3]),l.hide(),h.hide(),d.removeAttr("disabled").fadeIn(),c.removeAttr("disabled").fadeIn(),at>it){var e=at;at=it,it=e}if(ot>rt){e=ot;ot=rt,rt=e}f=m.getImageData(at,ot,it-at,rt-ot),k.width=it-at,k.height=rt-ot,M.putImageData(f,0,0),y.width=240,y.height=320;var a=new Image;a.onload=function(){C.drawImage(a,0,0,240,320)},a.src=k.toDataURL(),R.remove(),x.addClass("col-12 col-sm-12"),I.remove(),i.show(),r.show(),P=!0}else $("#btnCrop").html("Draw a Rectangle before cropping!"),setTimeout(function(){$("#btnCrop").html("Crop photo")},3e3)});var q=$("#fileInput"),H=$("#allCanvas");d.on("click",function(){if(j||S)if(S){var e="<!DOCTYPE html><html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'><title>Photo Uploading and Cropping Tool</title><link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css'><script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js'><\/script></head><body><div class='container-fluid'><p class='mb-1'><div class='alert alert-primary' role='alert'>Right click on the image, select 'Save picture as' to save.</p></div> <div class='text-center'><img src='"+w[0].toDataURL("image/jpeg",1)+"' alt='from canvas'/></div><p class='mb-1'><div class='alert alert-success' role='alert'>Then login via <a href='http://bit.ly/reg-sub'>myportal.ite.edu.sg/regsubmission</a> to submit the saved photo.</div></p></div></body></html>";(a=window.open()).document.write(e),a?a.focus():alert("Please allow popups for this website")}else{var a;e="<!DOCTYPE html><html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'><title>Photo Uploading and Cropping Tool</title><link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css'><script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js'><\/script></head><body><div class='container-fluid'><p class='mb-1'><div class='alert alert-danger' role='alert'><strong>IMAGE NOT SAVED! Tap and hold on the image, tap the 'Save Image' OR 'Add to Photos' button to save. [Watch Demo at the bottom]</strong></div></p><div class='text-center'><img src='"+w[0].toDataURL("image/jpeg",1)+"' alt='from canvas'/></div><p class='mb-1'><div class='alert alert-success' role='alert'>Then login via <a href='http://bit.ly/reg-sub'>myportal.ite.edu.sg/regsubmission</a> to submit the saved photo.</div></p><img style ='width:100%; height:auto;' src='https://puahhockleng.github.io/photocrop/MyMovie2.gif' alt='demo' ></div></body></html>";(a=window.open()).document.write(e),a?a.focus():alert("Please allow popups for this website")}else{var o=document.createElement("a");o.style="position: fixed; left -10000px;",o.href="data:application/octet-stream;base64,"+encodeURIComponent(w[0].toDataURL("image/jpeg").replace(/^data:image\/\w+;base64,/,"")),o.download=""==i.val()?"T1111111Z.jpg":i.val()+".jpg",document.body.appendChild(o),o.click(),document.body.removeChild(o),t.html("<div class='alert alert-primary' role='alert'>Login via <a href='http://bit.ly/reg-sub'>myportal.ite.edu.sg/regsubmission</a> to submit the saved photo.</div>"),d.hide(),c.hide(),q.hide(),H.hide()}}),c.on("click",function(){d.hide(),c.hide(),location.reload()}),u.on("mousedown touchstart",function(t){D&&!P&&(A||l.trigger("click"),st=!0,nt(t),lt(K,Q,!1))}),u.on("mousemove touchmove",function(t){st&&!P&&(nt(t),lt(K,Q,!0),ht())}),u.on("mouseup touchend",function(){st&&!P&&T&&(t.text(Y[2]),ht(),dt(),A=!1)}),u.on("mouseleave touchcancel",function(){st&&!P&&T&&(t.text(Y[2]),ht(),dt(),A=!1)});var K=0,Q=0,_=new Array,tt=new Array,et=new Array,at=0,ot=0,it=0,rt=0,st=!1,nt=function(t){var e=g.getBoundingClientRect(),a=g.width/e.width,o=g.height/e.height;t.touches?(K=(t.touches[0].pageX-e.left)*a,Q=(t.touches[0].pageY-e.top)*o,t.preventDefault()):(K=(t.clientX-e.left)*a,Q=(t.clientY-e.top)*o)},lt=function(t,e,a){_.push(t),tt.push(e),et.push(a)},ht=function(){b.strokeStyle="#df4b26",b.lineJoin="round",b.lineWidth=L,_.length>0&&(b.clearRect(0,0,g.width,g.height),at=_[0],ot=tt[0],it=_[_.length-1],rt=tt[tt.length-1],at<it&&ot<rt?(Math.abs(it-at)/Math.abs(rt-ot)<.75?rt=320/240*(it-at)+ot:it=.75*(rt-ot)+at,b.strokeRect(at,ot,Math.abs(it-at),Math.abs(rt-ot))):at>it&&ot<rt?(Math.abs(it-at)/Math.abs(rt-ot)<.75?rt=320/240*(at-it)+ot:it=at-.75*(rt-ot),b.strokeRect(it,ot,Math.abs(it-at),Math.abs(rt-ot))):at<it&&ot>rt?(Math.abs(it-at)/Math.abs(rt-ot)<.75?rt=320/240*(it-at)+ot:it=.75*(ot-rt)+at,b.strokeRect(at,rt,Math.abs(it-at),Math.abs(rt-ot))):(Math.abs(it-at)/Math.abs(rt-ot)<.75?rt=320/240*(at-it)+ot:it=at-.75*(ot-rt),b.strokeRect(it,rt,Math.abs(it-at),Math.abs(rt-ot))),it!=at&&(T=!0,l.removeAttr("disabled").fadeIn(),h.removeAttr("disabled").fadeIn(),s.hide(),n.hide()))},dt=function(){_.length=0,tt.length=0,et.length=0,st=!1}});</script>
+    </body>
 </html>
